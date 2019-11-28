@@ -1,0 +1,525 @@
+<!-- 75 above is green  -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="h-100">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#008000" />
+  <title>ICT PENETRATION Statistics </title>
+  <link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <style media="screen">
+    #map {
+      height: 100%;
+      min-height: 480px;
+      overflow: hidden;
+    }
+
+    .nicebox {
+      text-align: center;
+      font-family: "Roboto", "Arial", sans-serif;
+      font-size: 13px;
+      z-index: 5;
+      box-shadow: 0 4px 6px -4px #333;
+    }
+
+    /* #controls {
+				top: 10px;
+				left: 110px;
+				width: 360px;
+				height: 45px;
+			} */
+    #data-box {
+      line-height: 45px;
+      display: none;
+    }
+
+    #legend {
+      display: flex;
+      display: -webkit-box;
+      padding-top: 7px;
+    }
+
+    .color-key {
+      background: linear-gradient(to right,
+          hsl(5, 69%, 54%) 0%,
+          hsl(29, 71%, 51%) 17%,
+          hsl(54, 74%, 47%) 33%,
+          hsl(78, 76%, 44%) 50%,
+          hsl(102, 78%, 41%) 67%,
+          hsl(127, 81%, 37%) 83%,
+          hsl(151, 83%, 34%) 100%);
+      flex: 1;
+      -webkit-box-flex: 1;
+      margin: 0 5px;
+      text-align: left;
+      font-size: 1em;
+      line-height: 1em;
+    }
+
+    ,
+    infobox {
+      overflow: hidden;
+      min-height: 200px;
+      max-height: 220px;
+    }
+
+    #data-value {
+      font-size: 2em;
+      font-weight: bold;
+    }
+
+    #data-label {
+      font-size: 2em;
+      font-weight: normal;
+      padding-right: 10px;
+    }
+
+    #data-label:after {
+      content: ":";
+    }
+
+    #data-caret {
+      margin-left: -5px;
+      display: none;
+      font-size: 14px;
+      width: 14px;
+    }
+
+    .blog-footer {
+      padding: 2.5rem 0;
+      color: #999;
+      text-align: center;
+      background-color: #f9f9f9;
+      border-top: 0.05rem solid #e5e5e5;
+    }
+
+    .blog-footer p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body class="d-flex flex-column h-100">
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">
+        <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="" />
+        ICT Monitor
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="nig.html">Home<span class="sr-only">(current)</span></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="nig.html" tabindex="-1">Map</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main class="flex-shrink-0">
+    <section class="jumbotron text-center">
+      <div class="container">
+        <div class="row p-4">
+          <div class="col-3">
+            <img src="pic.png" alt="" />
+          </div>
+          <div class="col-6">
+            <h1 class="jumbotron-heading">STATES ICT PENETRATION & ADOPTION MONITOR</h1>
+          </div>
+        </div>
+        <p class="lead text-muted" id="seeName"> </p>
+      </div>
+      <div class="container infobox">
+        <div class="row">
+          <div id="controls" class="col-md-5">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Data Set</label>
+              </div>
+              <select class="custom-select" id="census-variable">
+                <option id="" title="Aggregate Score">Total
+                  Score</option>
+                <option id="1" title="Percentage of Budget spent on ICT" id="1">Percentage of Budget allocated to IT
+                </option>
+                <option id="2" title="Presence of a Ministry for ICT">Presence of a Ministry for ICT</option>
+                <option id="3" title="Secretatriat Internet Access">Allocation of a Special fund available to help drive
+                  ICT </option>
+
+                <option id="4" title=" level of deployment of computers systems in the state secretriat"> level of
+                  deployment of computers systems in state secretriat</option>
+                <option id="5" title="general ability of state civil servants to operate ICTs">General ability of state
+                  civil servants to operate ICTs
+                </option>
+                <option " id=" 6" title="state government's capacity to assemble/maintain ICT">state governments
+                  capacity to assemble/maintain ICT
+                </option>
+                <option id="7" title="Use of ICT">Rate Internet access in the state secretariat/government agencies
+                </option>
+                <option id="8" title=" ICT proficiency as criteria for employment"> ICT proficiency as criteria for
+                  employment into state civil service
+                </option>
+                <option id="9" title="Evidence of functional ICT Projects in state">Evidence of functional ICT Projects
+                  in state
+                </option>
+                <option id="10" title="Pecentage of IT certified Staff">Pecentage of IT certified Staff
+                </option>
+                <option id="11" title="States with a website ">State website
+                </option>
+                <option id="12" title="Use of ICT">Adherance to use of official email
+                </option>
+                <option id="13" title="Use of intranet in state government institutions  ">Use of intranet in state
+                  government institutions
+                </option>
+                <option id="14" title=" Use of Video conferencing for meetings"> Use of Video conferencing for
+                  meetings
+                </option>
+                <option id="15" title="Use of Filing system ">Use of a Digitized Filing system
+                </option>
+                <option id="16" title="Use of EHRT">Evidence of use of an electronic health records (EHR) system in
+                  state hospitals
+                </option>
+                <option value=id="17" title="Evidence of use of ICT as learning aid">Evidence of use of ICT as
+                  learning aid
+                </option>
+                <option id="18" title="Evidence of use of ICT in state judiciary">Evidence of use of ICT in state
+                  judiciary
+                </option>
+
+
+              </select>
+            </div>
+
+            <div id="legend">
+              <div id="census-min">min</div>
+              <div class="color-key"><span id="data-caret">&#x25c6;</span></div>
+              <div id="census-max">max</div>
+            </div>
+          </div>
+          <div id="data-box" class="col-md-6">
+            <span>
+              <p id="data-label" for="data-value"></p>
+              <p id="data-value"></p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="container">
+      <div class="jumbotron" id="map"></div>
+    </section>
+  </main>
+  <footer class="blog-footer mt-auto py-3">
+    <div class="container">
+      <p class="float-right"><a href="#">Back to top</a></p>
+      <span class="text-muted"> ©2019 Evolucionar Consulting</span>
+    </div>
+  </footer>
+  <script>
+    var mapStyle = [
+      {
+        stylers: [{ visibility: "off" }]
+      },
+      {
+        featureType: "landscape",
+        elementType: "geometry",
+        stylers: [{ visibility: "on" }, { color: "#fcfcfc" }]
+      },
+      {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [{ visibility: "on" }, { color: "#bfd4ff" }]
+      }
+    ];
+    var ictData = ".././data/fakeDb.json"
+    var map;
+    var censusMin = Number.MAX_VALUE,
+      censusMax = -Number.MAX_VALUE;
+    function initMap() {
+      map = new google.maps.Map(document.querySelector("#map"), {
+        center: { lat: 9.037, lng: 7.365 },
+        zoom: 5,
+        styles: mapStyle
+      });
+
+      map.data.setStyle(styleFeature);
+      map.data.addListener("mouseover", mouseInToRegion);
+      map.data.addListener("mouseout", mouseOutOfRegion);
+
+      // wire up the button
+      var selectBox = document.getElementById("census-variable");
+
+      google.maps.event.addDomListener(selectBox, "change", function () {
+        clearCensusData()
+        loadIctData(ictData, selectBox.options[selectBox.selectedIndex].id)
+
+
+        showName(selectBox.options[selectBox.selectedIndex].title);
+
+      });
+
+      // statepolygons
+      loadMapShapes();
+    }
+
+    function loadMapShapes() {
+      map.data.loadGeoJson(
+        ".././geodata/StatesBoundaries%20_WorldBankGroup(2016).geojson?static=1",
+        {
+          idPropertyName: "STATE"
+        }
+      );
+      // wait for the request to complete by listening for the first feature to be
+      // added
+      google.maps.event.addListenerOnce(map.data, "addfeature", function () {
+        google.maps.event.trigger(
+          document.getElementById("census-variable"),
+          "change"
+        );
+      });
+    }
+
+    function loadIctData(variable, id) {
+      let criteriaArr = [0, 15, 10, 5, 5, 5, 2, 10, 2, 7, 7, 7, 7, 3, 1, 5, 3, 3, 3, 100]
+      fetch(variable)
+        .then(res => res.json())
+        .then((res) => {
+          res.map((row) => {
+
+            let censusVariable
+            console.log("loadr", row.State, censusVariable);
+            let counter = eval(id)
+            let count = criteriaArr[counter]
+            switch (counter) {
+              case 1:
+                censusVariable = parseFloat(row.percentBudget);
+                break;
+              case 2:
+                censusVariable = parseFloat(row.icDept);
+                break;
+              case 3:
+                censusVariable = parseFloat(row.ICTFund);
+                break;
+              case 4:
+                censusVariable = parseFloat(row.UseofIT)
+                break;
+              case 5:
+                censusVariable = parseFloat(row.staffLiteracy);
+                break;
+              case 6:
+                censusVariable = parseFloat(row.techLiteracy);
+                break;
+              case 7:
+                censusVariable = parseFloat(row.internetAccess);
+                break;
+              case 8:
+                censusVariable = parseFloat(row.staffProficiecy);
+                break;
+              case 9:
+                censusVariable = parseFloat(row.fuctionalInfrastructure);
+                break;
+              case 10:
+                censusVariable = parseFloat(row.expertStaff);
+                break;
+
+              case 11:
+                censusVariable = parseFloat(row.stateWebsite);
+                break;
+
+              case 12:
+                censusVariable = parseFloat(row.emailUse);
+                break;
+
+              case 13:
+                censusVariable = parseFloat(row.stateIntranet);
+                break;
+
+              case 14:
+                censusVariable = parseFloat(row.ehr);
+                break;
+
+              case 17:
+                censusVariable = parseFloat(row.ICTSchool);
+                break;
+
+              case 18:
+                censusVariable = parseFloat(row.ICTJudiciary);
+                break;
+              case 19:
+                censusVariable = parseFloat(row.Total)
+              default:
+                censusVariable = parseFloat(row.Total);
+                count = 100
+                break
+            }
+
+            if (censusVariable < censusMin) {
+              censusMin = censusVariable;
+            }
+            if (censusVariable > censusMax) {
+              censusMax = censusVariable;
+            }
+
+            let stateId = row.Rank
+
+
+
+            let dataObj = {
+              censusVariable,
+              stateId: stateId,
+              CollectionOfficer: row.CollectionOfficer,
+              percentBudget: row.percentBudget,
+              icDept: row.icDept,
+              ICTFund: row.ICTFund,
+              UseofIT: row.UseofIT,
+              staffLiteracy: row.staffLiteracy,
+              techLiteracy: row.techLiteracy,
+              internetAccess: row.internetAccess,
+              staffProficiecy: row.staffProficiecy,
+              fuctionalInfrastructure: row.fuctionalInfrastructure,
+              expertStaff: row.expertStaff,
+              stateWebsite: row.stateWebsite,
+              emailUse: row.emailUse,
+              stateIntranet: row.stateIntranet,
+              videoConferencing: row.videoConferencing,
+              digitalFiling: row.digitalFiling,
+              ehr: row.ehr,
+              ICTSchool: row.ICTSchool,
+              ICTJudiciary: row.ICTJudiciary,
+              total: row.Total
+            }
+
+            map.data.getFeatureById(stateId).setProperty("census_variable", censusVariable)
+            map.data
+              .getFeatureById(stateId)
+              .setProperty("maxWeight", count);
+            map.data
+              .getFeatureById(stateId)
+              .setProperty("data_obj", dataObj);
+
+            // Update and display the legend
+            document.getElementById(
+              "census-min"
+            ).textContent = censusMin.toLocaleString();
+            document.getElementById(
+              "census-max"
+            ).textContent = count.toLocaleString();
+          })
+        }
+
+        ).catch(e => console.log(e));
+
+    }
+
+
+    function clearCensusData() {
+      censusMin = Number.MAX_VALUE;
+      censusMax = -Number.MAX_VALUE;
+      map.data.forEach(function (row) {
+        row.setProperty("census_variable", undefined);
+        row.setProperty("maxWeight", undefined)
+
+
+      });
+      document.getElementById("data-box").style.display = "none";
+      document.getElementById("data-caret").style.display = "none";
+    }
+
+    function styleFeature(feature) {
+      var low = [5, 69, 54]; // color of smallest datum
+      var high = [151, 83, 34]; // color of largest datum
+
+      // delta represents where the value sits between the min and max
+      var weight = eval(feature.getProperty("maxWeight"));
+      var mag = eval(feature.getProperty("census_variable"));
+      var delta =
+        (feature.getProperty("census_variable") - censusMin) /
+        (censusMax - censusMin);
+
+      var hue = (mag / weight) * 100;
+
+      var color = [];
+
+
+      if (hue > 60) {
+        color = [151, 83, 34];
+      } else if (hue > 30 && hue < 60) {
+        color = [54, 74, 47];
+      } else {
+        color = [5, 69, 54];
+      }
+
+      var title = feature.getProperty("admin1Name");
+
+      // determine whether to show this shape or not
+      var showRow = true;
+      if (
+        feature.getProperty("census_variable") == null ||
+        isNaN(feature.getProperty("census_variable"))
+      ) {
+        showRow = false;
+      }
+
+      var outlineWeight = 0.5,
+        zIndex = 1;
+      if (feature.getProperty("state") === "hover") {
+        outlineWeight = zIndex = 2;
+      }
+
+      return {
+        title,
+        strokeWeight: outlineWeight,
+        strokeColor: "#fff",
+        zIndex: zIndex,
+        fillColor:
+          "hsl(" + color[0] + "," + color[1] + "%," + color[2] + "%)",
+        fillOpacity: 0.75,
+        visible: showRow
+      };
+    }
+
+    function mouseInToRegion(e) {
+      e.feature.setProperty("state", "hover");
+      var percent =
+        ((e.feature.getProperty("census_variable") - censusMin) /
+          (censusMax - censusMin)) *
+        100;
+
+      // update the label
+      document.getElementById(
+        "data-label"
+      ).textContent = e.feature.getProperty("admin1Name");
+      document.getElementById(
+        "data-value"
+      ).textContent = e.feature
+        .getProperty("census_variable")
+        .toLocaleString();
+      document.getElementById("data-box").style.display = "block";
+      document.getElementById("data-caret").style.display = "block";
+      document.getElementById("data-caret").style.paddingLeft = percent + "%";
+    }
+    function mouseOutOfRegion(e) {
+      e.feature.setProperty("state", "normal");
+    }
+    function showName(value) {
+      let showBox = document.getElementById("seeName");
+
+      showBox.textContent = `Map Showing ${value}`;
+    }
+  </script>
+  <script src="https://cdn.rawgit.com/googlemaps/js-map-label/gh-pages/src/maplabel.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByJpcW-yoL4o5kZ921xORiVZb0q2SLkn8&callback=initMap"></script>
+</body>
+
+</html>
